@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-//https://myanimalapi.herokuapp.com/api
-let baseURL = 'https://testgeocoderapi.herokuapp.com/api';
+//https://testgeocoderapi.herokuapp.com/api/
+//http://localhost:3000/api
+let baseURL = 'https://testgeocoderapi.herokuapp.com/api/';
 
 const instance = axios.create({
   baseURL,

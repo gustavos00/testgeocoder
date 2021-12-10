@@ -8,7 +8,7 @@ interface TextProps {
 function Text({ text, placeholder }: TextProps) {
   return (
     <Styles.Container>
-      <Styles.Placeholder>{placeholder}</Styles.Placeholder>
+      <h3>{placeholder}</h3>
       <Styles.Text>{text}</Styles.Text>
     </Styles.Container>
   );

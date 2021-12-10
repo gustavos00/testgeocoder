@@ -16,6 +16,8 @@ function VerifyAddress({
   return (
     <Styles.Container>
       <Text placeholder={"Endereço/Morada:"} text={formattedAddress} />
+
+      <Styles.SubmitForm></Styles.SubmitForm>
       <Text placeholder={"Este é o seu endereço/morada?"} />
 
       <Styles.ButtonsContainer>
