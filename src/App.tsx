@@ -36,10 +36,9 @@ function App() {
 
   const handleUserResponseSubmit = async (wasValid: boolean) => {
     try {
-      console.log(wasValid)
       await api.get(`/valitadeAddress?wasValid=${wasValid}`);
 
-      alert('0')
+      alert('Tudo ok, obrigado 👊')
     } catch (e) {
       console.log(e);
     }
