@@ -1,22 +1,75 @@
-import React from 'react';
-import styled from 'styled-components';
+import GlobalStyle from "./styles/global";
 
-function App() {
-  return (
-    <Container>
-      <h1>Hello World</h1>
-    </Container>
+import Input from "./components/Input";
+import Button from "./components/Button";
 
-  );
+import { useState } from "react";
+import { Content, Container } from "./style";
+
+import api from "./services/api";
+import VerifyAddress from "./components/VerifyAddress";
+
+interface AddressDataProps {
+  formattedAddress: string;
 }
 
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
+function App() {
+  const [addressData, setAddressData] = useState<AddressDataProps>();
+  const [streetName, setStreetName] = useState<string>('');
+  const [postalCode, setPostalCode] = useState<string>('');
+  const [city, setCity] = useState<string>('');
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+  const handleUserAddressSubmit = async () => {
+    try {
+      const formData = new URLSearchParams();
+      formData.append('streetName', streetName)
+      formData.append('postalCode', postalCode)
+      formData.append('city', city)
+
+      const { data } = await api.post("/getAddress", formData);
+
+      setAddressData(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleUserResponseSubmit = async (wasValid: boolean) => {
+    try {
+      console.log(wasValid)
+      await api.get(`/valitadeAddress?wasValid=${wasValid}`);
+
+      alert('0')
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  return (
+    <Container>
+      <Content>
+        <Input inputType="text" handleChangeText={(e) => setStreetName(e) }placeholderText="Nome da Rua" />
+        <Input inputType="text" handleChangeText={(e) => setPostalCode(e) }placeholderText="CEP/Código postal" />
+        <Input inputType="text" handleChangeText={(e) => setCity(e)}placeholderText="Cidade" />
+
+        <Button
+          handleSubmit={() => handleUserAddressSubmit()}
+          text={"Submeter"}
+        />
+      </Content>
+
+      {addressData && (
+        <>
+          <Content>
+            <VerifyAddress
+              formattedAddress={addressData.formattedAddress}
+              handleUserResponseSubmit={handleUserResponseSubmit}
+            />
+          </Content>
+        </>
+      )}
+      <GlobalStyle />
+    </Container>
+  );
+}
 
 export default App;
